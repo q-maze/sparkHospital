@@ -10,6 +10,32 @@ Some of the data that is gathered pertains to a person’s identity, demographic
 
 After evaluation, the random forest model was shown to be more effective than all other evaluated models, including the APACHE model, at predicting patient mortality. The model achieved an accuracy of over 92% with an F1 score of 0.59 and an AUC of 0.92. 
 
+## Exploratory Data Analysis
+
+To begin the exploration, the response variable, hospital_death, was examined. The outcome variable is hospital_death, which is binary with a value of 1 indicating a patient’s death and a value of 0 indicating a patient’s survival. Distribution of the count for each outcome variable shown in Figure 1 below:
+
+![Figure1](https://github.com/q-maze/sparkHospital/blob/871b97d37693bfb255132aed968c9641b7d6eaf9/images/OutcomeEDA.png)
+
+As shown in the figure above, our response feature is moderately imbalanced, with an approximate ratio of 10:1. This imbalance motivated exploration of imbalance compensation options during the model building process.
+
+Next, a new dataframe is created using a groupBy to aggregate on hospital_id and provide the death percentage per hospital. It is clear that the distribution of hospital death percentages is very left skewed, which is advantageous for patients. 
+
+
+![Figure2](https://github.com/q-maze/sparkHospital/blob/871b97d37693bfb255132aed968c9641b7d6eaf9/images/hospitalByHospitalDeath.png)
+
+Several categorical features in the dataset including the ICU type, which body system was determined as the cause of admission for use in the APACHE scores, if the stay was the result of an elective surgery, and distribution of patients by ethnicity and gender were also explored.
+
+![Figure3a](https://github.com/q-maze/sparkHospital/blob/871b97d37693bfb255132aed968c9641b7d6eaf9/images/EDA1.png)
+
+It is clear from this analysis that Med/Surg ICUs are the most common type in the dataset and that cardiovascular issues are by far the most commonly evaluated item in the APACHE indexes.
+
+
+![Figure3b](https://github.com/q-maze/sparkHospital/blob/871b97d37693bfb255132aed968c9641b7d6eaf9/images/EDA2.png)
+
+Exploratory analysis was also performed on hospital_admit_source, icu_admit_source, and icu_stay_type. The hospital_admit_source refers to the location of the patient prior to being admitted to the hospital, and the highest count is the Emergency Department, which is around 35,000 with the next location being much less frequent at less than 10,000 at the operating room. The most frequent icu_admit_source is the accident and emergency unit, and the most frequent icu_stay_type is admit, which refers to the type of unit admission for the patient. 
+
+![Figure3c](https://github.com/q-maze/sparkHospital/blob/871b97d37693bfb255132aed968c9641b7d6eaf9/images/EDA3.png)
+
 ## Methods
 
 ### Data Preprocessing Pipeline
